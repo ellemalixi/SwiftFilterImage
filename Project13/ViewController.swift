@@ -117,6 +117,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         let picker = UIImagePickerController()
         picker.allowsEditing = true
         picker.delegate = self
+        imageView.alpha = 0
         present(picker, animated: true)
     }
     
@@ -124,6 +125,10 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         guard let image = info[.editedImage] as? UIImage else { return }
         dismiss(animated: true)
         currentImage = image
+        
+        UIView.animate(withDuration: 1, delay: 0.3, animations: {
+            self.imageView.alpha = 1
+        })
         
         let beginImage = CIImage(image: currentImage)
         currentFilter.setValue(beginImage, forKey: kCIInputImageKey)
